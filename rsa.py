@@ -9,7 +9,7 @@ message
 from math import gcd 
 
 def gen_random_prime_number():
-    return 13, 19
+    return 7, 19
 
 p, q = gen_random_prime_number() 
 
@@ -44,13 +44,14 @@ def gen_private_key():
         d = (1 + m * i) / e
         The value of d must be in whole number. 
     """
-    m = 216
-    e = 5
+
+    m = get_m()
+    e = gen_public_key()
+
     for i in range(2, 1000):
         d = (1 + m * i ) / 5
-
         if int(d) == d: 
-            return d 
+            return int(d) 
 
 d = gen_private_key() 
 
@@ -60,6 +61,12 @@ def encode(message=None):
     """
     return ord(message) 
 
+def decode(char=None):
+    """
+        Return the plain text from given ascii string.
+    """
+    return chr(char)
+
 
 def encrypt(message=None):
     if message is None: 
@@ -68,19 +75,32 @@ def encrypt(message=None):
     cipher_char = []  
     for char in message:
         encoded_char = encode(char)
-        cipher = encoded_char ** gen_private_key() % gen_n() 
-        cipher_char.append(encode(char)) 
+        cipher = encoded_char ** gen_public_key() % gen_n() 
+        cipher_char.append(cipher) 
+
+    return ','.join(list(map(lambda char: str(char), cipher_char)))
 
 
 
 
-def decrypt():
-    pass 
+def decrypt(cipher=None):
+    if cipher is None:
+        raise ValueError("Cipher shouldn't be None")
+
+    plain_char = []
+    cipher_list = cipher.split(',')
+
+    for cipher_char in cipher_list: 
+        plain = decode(int(cipher_char) ** gen_private_key() % gen_n())
+        plain_char.append(plain)
+    return ''.join(plain_char)
 
 
 
-def decode():
-    """
-        Return the plain text from given ascii string.
-    """
-    pass 
+
+
+
+
+
+
+
