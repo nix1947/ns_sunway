@@ -4,6 +4,56 @@
 """
 Implement a RSA algorithm to encrypt and decrypt
 message
+
+choose two prime number 
+
+
+p = 7 
+q = 13 
+
+n = p * q = 91
+
+m = (p - 1 ) * (q - 1) 
+    (7 - 1 ) * (13 - 1) = 72
+
+
+Now it's time to find public key
+
+public key = (e, n) 
+
+To find public key we have an equation 
+
+GCD(e, m) = 1 : 1 < e < m 
+
+GCD(e, 72) = 1
+
+lets choose e = 4
+factors of 4
+4 = 2 * 2 * 1
+
+m = 72
+factors of m 
+2 * 3 * 2 * 3 *2 * 1
+
+we cannot choose e as 4 because the 
+GCD(greatest common divider) of 
+4 and 72 is 2 not 1
+
+let's choose e = 5
+
+Factor of e = 5
+5 = 5 * 1
+
+factor of m = 7 2
+
+2 * 3 * 2 * 3 *2 * 1
+
+The greatest divisor factor of e=5 and
+m=72 here is 1 
+so we can  choose e as 5 
+
+so public key (e, n) = (5, 91)
+
 """
 
 from math import gcd 
